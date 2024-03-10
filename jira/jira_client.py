@@ -55,7 +55,21 @@ class JiraClient:
 
 	def get_worklogs(self, issue: str) -> "list[JiraWorklog]":
 		url = f"{self.url}/rest/api/3/issue/{issue}/worklog"
-		response = self.get(url)
-		results = response.get("worklogs", [])
+		params = {
+			"startAt": 0,
+			"maxResults": 100
+		}
 
-		return [JiraWorklog.from_dict(result) for result in results]
+		while True:
+			response = self.get(url, params=params)
+
+			if not response:
+				break
+
+			params["startAt"] += response["maxResults"]
+
+			for worklog in response.get("worklogs"):
+				yield JiraWorklog.from_dict(worklog)
+
+			if response.get("total") <= params["startAt"]:
+				break
