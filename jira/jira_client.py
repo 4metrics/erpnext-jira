@@ -33,7 +33,7 @@ class JiraClient:
 	def get_issues(self, project: str) -> "Iterator[JiraIssue]":
 		url = f"{self.url}/rest/api/3/search"
 		params = {
-			"jql": f"project = {project}",
+			"jql": f"project = {project} AND worklogDate > 0 ORDER BY created ASC",
 			"fields": "summary",
 			"startAt": 0,
 			"maxResults": 100,
