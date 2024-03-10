@@ -45,11 +45,12 @@ class JiraClient:
 			if not response:
 				break
 
-			params["startAt"] += params["maxResults"]
+			params["startAt"] += response["maxResults"]
+
 			for issue in response.get("issues"):
 				yield JiraIssue.from_dict(issue)
 
-			if response.get("total") < params["startAt"]:
+			if response.get("total") <= params["startAt"]:
 				break
 
 	def get_worklogs(self, issue: str) -> "list[JiraWorklog]":
