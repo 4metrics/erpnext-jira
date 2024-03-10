@@ -2,11 +2,11 @@ from . import __version__ as app_version
 
 app_name = "jira"
 app_title = "Jira Integration"
-app_publisher = "ALYF GmbH"
+app_publisher = "4metrics"
 app_description = "Jira Integration for ERPNext"
 app_icon = "octicon octicon-file-directory"
 app_color = "grey"
-app_email = "hallo@alyf.de"
+app_email = "office@4metrics.at"
 app_license = "MIT"
 
 required_apps = ["erpnext"]
